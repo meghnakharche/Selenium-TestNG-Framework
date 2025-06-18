@@ -10,19 +10,19 @@ public class Checkout {
     //Locators
     private By gotocart= By.className("shopping_cart_badge");
     private By checkout= By.xpath("//button[@id='checkout']");
-    private By firstname= By.xpath("//input[@id='first-name' and @name='firstName']");
-    private By lastname= By.xpath("//input[@id='last-name' and @name='lastName']");
-    private By zipcode= By.xpath("//input[@id='postal-code' and @placeholder='Zip/Postal Code']");
+    private By fname= By.xpath("//input[@id='first-name' and @name='firstName']");
+    private By lname= By.xpath("//input[@id='last-name' and @name='lastName']");
+    private By zip= By.xpath("//input[@id='postal-code' and @placeholder='Zip/Postal Code']");
     private By next= By.xpath("//input[@id='continue' and @value='Continue']");
     private By finish= By.xpath("//button[@id='finish' and text()='Finish']");
 
     //Action
-    public void Checkout_cart(){
+    public void Checkout_cart(String firstname, String lastname,String zipcode){
         driver.findElement(gotocart).click();
         driver.findElement(checkout).click();
-        driver.findElement(firstname).sendKeys("Johny");
-        driver.findElement(lastname).sendKeys("Dude");
-        driver.findElement(zipcode).sendKeys("450020");
+        driver.findElement(fname).sendKeys(firstname);
+        driver.findElement(lname).sendKeys(lastname);
+        driver.findElement(zip).sendKeys(zipcode);
         driver.findElement(next).click();
         driver.findElement(finish).click();
 

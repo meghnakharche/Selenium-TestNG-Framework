@@ -1,46 +1,32 @@
 package tests;
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import pages.AddToCart;
 import pages.Checkout;
 import pages.LoginPage;
-import io.github.bonigarcia.wdm.WebDriverManager;
+import utils.ConfigReader;
 
-public class LoginTest {
-    WebDriver driver;
+import java.util.Properties;
+
+public class LoginTest extends BaseTest {
     LoginPage loginpage;
     AddToCart addtocart;
     Checkout checkout;
 
-    @BeforeClass
-    public void setup() {
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.get("https://www.saucedemo.com/");
-
-    }
-
     @Test
     public void MainTest() {
+        Properties prop = ConfigReader.readpropertie();
+        String user = prop.getProperty("username");
+        String pass = prop.getProperty("password");
         loginpage = new LoginPage(driver);
-        loginpage.login("standard_user", "secret_sauce");
+        loginpage.login(user, pass);
         Assert.assertTrue(driver.getCurrentUrl().contains("inventory"), "Login successful!");
         addtocart= new AddToCart(driver);
         addtocart.AddItems();
         checkout= new Checkout(driver);
-        checkout.Checkout_cart();
+        checkout.Checkout_cart("firstname","lastname","zipcode");
         Assert.assertTrue(driver.getCurrentUrl().contains("checkout-complete.html"));
 
-    }
-
-   @AfterClass
-   public void tearDown() {
-       driver.quit();
     }
 }
